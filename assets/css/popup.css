@@ -211,3 +211,8 @@ div{
     align-items: center;
     column-gap: 6px;
 }
+
+#signout{
+    position: absolute;
+    right: 5vw;
+}
