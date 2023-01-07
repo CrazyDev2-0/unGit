@@ -42,6 +42,7 @@ async function loginCheck() {
 
 function scheduleDataFetch(){
     if(scheduler != null) clearInterval(scheduler);
+    updateLocalDatabase();
     scheduler = setInterval(async function () {
         await updateLocalDatabase();
     }, 60*1000);
