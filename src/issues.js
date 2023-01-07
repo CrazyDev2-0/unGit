@@ -1,3 +1,5 @@
+importScripts("api.js");
+
 const IssueType = {
     ASSIGNED: "assignee",
     CREATED: "author",
@@ -11,7 +13,8 @@ const IssueType = {
 async function findIssues(username, type) {
     if (!Object.values(IssueType).includes(type)) throw new Error("Invalid Issue Type");
     const result = await callApi(`search/issues`, {
-        q: `is:open is:issue ${type}:${username} archived:false `
+        q: `is:open is:issue ${type}:${username} archived:false `,
+        per_page: 10
     });
     return result.items.map(el => {
         return {
@@ -19,10 +22,15 @@ async function findIssues(username, type) {
             title: el.title,
             api_url: el.url,
             html_url: el.html_url,
-            labels: el.labels,
+            labels: el.labels.map(el => {
+                return {
+                    color: el.color,
+                    name: el.name
+                }
+            }),
             comments_count: el.comments,
-            created_at: new Date(el.created_at),
-            updated_at: new Date(el.updated_at)
+            created_at: el.created_at,
+            updated_at:el.updated_at
         }
     });
 }

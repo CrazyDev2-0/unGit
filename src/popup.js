@@ -40,6 +40,7 @@ function  onClickSubmitBtn(){
 }
 
 
+
 // Initialize listeners
 document.addEventListener('DOMContentLoaded', () => checkLoginStatus())
 $("#username-submit-btn").click(onClickSubmitBtn);

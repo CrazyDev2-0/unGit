@@ -1,3 +1,5 @@
+importScripts("api.js");
+
 // Helper function
 function formatPRListResponses(rawData) {
     return rawData.items.map(el => {

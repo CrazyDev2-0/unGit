@@ -1,6 +1,13 @@
 async function callApi(route, queryParameters) {
-    const response = await axios.get(`https://api.github.com/${route}`, {
-        params: queryParameters
-    });
-    return response.data;
+    const queryParamsString = new URLSearchParams(queryParameters).toString()
+    const response = await fetch(`https://api.github.com/${route}?${queryParamsString}`);
+    return await response.json();
 }
+
+/**
+ {
+     "q" : "is:open is:pr assignee:Tanmoy741127 archived:false",
+      "r" : 45
+ }
+ *
+ * */

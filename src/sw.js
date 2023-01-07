@@ -1,5 +1,6 @@
-importScripts("./vendor/axios.js");
-importScripts("./vendor/moment.js")
+importScripts("./vendor/moment.js");
+importScripts("./issues.js");
+importScripts("./pr.js");
 
 let loggedIn = false;
 let username = '';
@@ -37,6 +38,30 @@ async function loginCheck() {
     else return  false;
 }
 
+async function updateLocalDatabase(){
+    // Issues
+    // IssueType.ASSIGNED
+    const assignedIssues = await  findIssues(username, IssueType.ASSIGNED);
+    // IssueType.CREATED
+    const createdIssues = await  findIssues(username, IssueType.CREATED);
+    // IssueType.MENTIONED
+    const mentionedIssues = await  findIssues(username, IssueType.MENTIONED);
+
+    // Store the details
+    await chrome.storage.local.set({
+        "assigned_issues": assignedIssues,
+        "created_issues": createdIssues,
+        "mentioned_issues": mentionedIssues,
+    })
+
+    console.log(assignedIssues);
+    console.log(createdIssues);
+    console.log(mentionedIssues);
+
+}
+
+
+
 // Message listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if(message.type === "get-login-status"){
@@ -63,3 +88,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //     // 3. Got an asynchronous response with the data from the service worker
 //     console.log('received user data', response);
 // });
+
+// run on start
+readUsernameFromStorage();
+// setInterval(function () {
+//     console.log('open');
+// }, 1000)
+
+chrome.runtime.onInstalled.addListener(async()=>{
+
+})
