@@ -1,4 +1,5 @@
 importScripts("api.js");
+importScripts("helper.js")
 
 // Helper function
 function formatPRListResponses(rawData) {
@@ -15,8 +16,8 @@ function formatPRListResponses(rawData) {
             html_url: el.html_url,
             labels: el.labels,
             comments_count: el.comments,
-            created_at: new Date(el.created_at),
-            updated_at: new Date(el.updated_at)
+            created_at: el.created_at,
+            updated_at: el.updated_at
         }
     });
 }
@@ -31,9 +32,10 @@ async function findPR_Draft(username){
 
 async function findPR_Merged(username)  {
     // current from list of PRs check merged field and filter only last 3 days
+    const FETCH_BEFORE_DAYS = 15; // TODO change later
     var currentDate = new Date(Date.now());
     var currentDateString = datetimeToDateString(currentDate);
-    var threeDaysBeforeDateString = datetimeToDateString(new Date(currentDate - 5*72*3600*1000));
+    var threeDaysBeforeDateString = datetimeToDateString(new Date(currentDate - FETCH_BEFORE_DAYS*24*3600*1000));
     const result = await callApi(`search/issues`, {
         q: `is:pr is:closed author:${username} merged:${threeDaysBeforeDateString}..${currentDateString} sort:updated-desc`
     });

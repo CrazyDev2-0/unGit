@@ -15,14 +15,8 @@
     <script src="/src/vendor/jquery.min.js"></script>
     <!-- Load axios.js -->
     <script src="/src/vendor/axios.js"></script>
-    <!-- Load api.js -->
-    <script src="/src/api.js"></script>
     <!-- Load herlper.js -->
     <script src="/src/helper.js"></script>
-    <!-- Load issues.js -->
-    <script src="/src/issues.js"></script>
-    <!-- Load pr.js -->
-    <script src="/src/pr.js"></script>
   </head>
   <body>
     <!-- Welcome screen -->
@@ -45,31 +39,54 @@
     <!-- Second page -->
     <div class="page hidden" id="second-screen">
         <!-- Topbar -->
-      <div class="choose_option_issue_pr">
-        <img src="/assets/icons/icon48x48.png" class="mr-4" height="40px" />
-        <div class="underlinedtabs">        
-            <div class="underlinedtab is-active">
-              <span>Issues</span>
-            </div>
-            <div class="underlinedtab">
-              <span>PRs</span>
-            </div>
+          <div class="choose_option_issue_pr">
+            <img src="/assets/icons/icon48x48.png" class="mr-4" height="40px" />
+            <div class="underlinedtabs">
+                <div class="underlinedtab is-active"  id="issues-tab">
+                  <span>Issues</span>
+                </div>
+                <div class="underlinedtab" id="prs-tab">
+                  <span>PRs</span>
+                </div>
 
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <!-- Category bar -->
-      <div class="roundedtabs mt-2 mb-3">        
-          <div class="roundedtab" id="assigned">
+
+      <!-- Issue Category bar -->
+      <div class="roundedtabs mt-2 mb-3 hidden" id="issue-category-bar">
+          <div class="roundedtab" id="issue-category-assigned">
             <span>Assigned</span>
           </div>
-          <div class="roundedtab is-active" id="mentioned">
+          <div class="roundedtab" id="issue-category-mentioned">
             <span>Mentioned</span>
           </div>
-          <div class="roundedtab" id="subscribed">
-            <span>Subscribed</span>
+          <div class="roundedtab" id="issue-category-created">
+            <span>Created</span>
           </div>
       </div>
+
+        <!-- PR Category bar -->
+        <div class="roundedtabs mt-2 mb-3 hidden"  id="pr-category-bar">
+            <div class="roundedtab" id="pr-category-under-review">
+                <span>Under Review</span>
+            </div>
+            <div class="roundedtab" id="pr-category-merged">
+                <span>Merged</span>
+            </div>
+            <div class="roundedtab" id="pr-category-ci-passed">
+                <span>CI Passed</span>
+            </div>
+            <div class="roundedtab" id="pr-category-ci-failed">
+                <span>Ci Failed</span>
+            </div>
+            <div class="roundedtab" id="pr-category-awaiting-review">
+                <span>Awaiting Review</span>
+            </div>
+            <div class="roundedtab" id="pr-category-draft">
+                <span>Draft</span>
+            </div>
+        </div>
       <!-- divider -->
       <div class="divider"></div>
 
