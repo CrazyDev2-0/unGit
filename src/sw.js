@@ -44,7 +44,7 @@ function scheduleDataFetch(){
     if(scheduler != null) clearInterval(scheduler);
     scheduler = setInterval(async function () {
         await updateLocalDatabase();
-    }, 10*60*1000);
+    }, 60*1000);
 }
 
 async function updateLocalDatabase(){
@@ -82,6 +82,9 @@ async function updateLocalDatabase(){
         UnderReviewPRs[i].reviewers_status = reviewers_status;
     }
 
+    // Fetch old details
+    const oldDetails = await chrome.storage.local.get();
+
     // Store the details
     await chrome.storage.local.set({
         "assigned_issues": assignedIssues,
@@ -95,10 +98,52 @@ async function updateLocalDatabase(){
         "under_review_prs": UnderReviewPRs
     })
 
+    // Fetch new details
+    const newDetails = await chrome.storage.local.get();
+    try {
+        if(changed(oldDetails, newDetails)){
+            chrome.notifications.create((Math.random() + 1).toString(36).substring(7), {
+                type: 'basic',
+                iconUrl: 'https://gcdnb.pbrd.co/images/yH3va4BzDRQh.png?o=1',
+                title: 'Check UnGit for updated information',
+                message: 'If you have some update in your profile',
+                priority: 2
+            })
+        }
+    }catch (e){
+        console.log("Failed to analyze changes");
+    }
+
     console.log("updated")
 }
 
+// Helpers
+function IDMap(arg) {
+    abc = {}
+    for(obj in arg) {
+        if(typeof obj != "object") continue;
+        for (let i = 0; i < arg[obj].length; i++) {
+            id = arg[obj][i].id
+            if (id === undefined){
+                continue
+            }else{
+                abc[id] = obj
+            }
+        }
+    }
+    return abc
+}
 
+function changed(oldState, newState) {
+    const oldIDMap = IDMap(oldState)
+    const newIDMap = IDMap(newState)
+    for(const [key, value] of Object.entries(newIDMap)){
+        if(oldIDMap[key] !== value){
+            return true;
+        }
+    }
+    return false;
+}
 
 // Message listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
