@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ungit</title>
+    <!-- Load bulma.min.css -->
+    <link rel="stylesheet" href="/assets/css/bulma.min.css" />
+    <!-- Load style.css -->
+    <link rel="stylesheet" href="/assets/css/popup.css" />
+    <!-- Load moment.js -->
+    <script src="/src/vendor/moment.js"></script>
+    <!-- Load jquery.min.js -->
+    <script src="/src/vendor/jquery.min.js"></script>
+    <!-- Load axios.js -->
+    <script src="/src/vendor/axios.js"></script>
+    <!-- Load api.js -->
+    <script src="/src/api.js"></script>
+    <!-- Load herlper.js -->
+    <script src="/src/helper.js"></script>
+    <!-- Load issues.js -->
+    <script src="/src/issues.js"></script>
+    <!-- Load pr.js -->
+    <script src="/src/pr.js"></script>
+  </head>
+  <body>
+    <!-- Welcome screen -->
+    <div class="page is-flex is-flex-direction-column is-justify-content-center is-align-items-center hidden" id="welcome-screen">
+      <img src="/assets/img/full_logo.png" alt="Ungit" height="200px" />
+      <div class="is-flex is-flex-direction-column mt-6">
+        <input
+          class="input mb-2 is-primary"
+          type="text"
+          placeholder="Enter your Github username"
+          id="username-input"
+        />
+        <button class="button is-primary is-priamry-focused" id="username-submit-btn">
+          Get Started
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Second page -->
+    <div class="page hidden" id="second-screen">
+        <!-- Topbar -->
+      <div class="choose_option_issue_pr">
+        <img src="/assets/icons/icon48x48.png" class="mr-4" height="40px" />
+        <div class="underlinedtabs">        
+            <div class="underlinedtab is-active">
+              <span>Issues</span>
+            </div>
+            <div class="underlinedtab">
+              <span>PRs</span>
+            </div>
+
+        </div>
+      </div>
+
+      <!-- Category bar -->
+      <div class="roundedtabs mt-2 mb-3">        
+          <divdiv class="roundedtab ">
+            <span>Assigned</span>
+          </divdiv>
+          <divdiv class="roundedtab is-active">
+            <span>Mentioned</span>
+          </divdiv>
+          <div class="roundedtab">
+            <span>Subscribed</span>
+          </div>
+      </div>
+      <!-- divider -->
+      <div class="divider"></div>
+
+        <!-- Cards list -->
+        <div class="cards-list">
+            <div class="info-card">
+                <div class="card-title">Performance Improvement</div>
+                <div class="card-subtitle">
+                    Circuitverse/mobile-app <span class="label">enhancement</span> <span class="label">enhancement</span>
+                </div>
+                <div class="">
+                    <span class="label"><span class="dot red"></span>enhancement</span>
+                    <span class="label"><span class="dot yellow"></span>enhancement</span>
+                    <span class="label"><span class="dot green"></span>enhancement</span>
+                    <span class="label">good first issue</span>
+                </div>
+                <div class="details">
+                    <div class="chat-count">
+                        <img src="/assets/icons/chat.png" />69
+                    </div>
+                    &nbsp;
+                    &#x2022;
+                    &nbsp;
+                    <b>opened</b>&nbsp;28-12-2021
+                    &nbsp;
+                    &#x2022;
+                    &nbsp;
+                    <b>last updated</b>&nbsp;28-12-2021
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Load scripts -->
+    <script src="/src/popup.js"></script>
+  </body>
+</html>

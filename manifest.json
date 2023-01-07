@@ -1,0 +1,21 @@
+{
+  "name": "Ungit - The easiest way to manage Issues & PRs",
+  "version": "1.0.0",
+  "description": "Ungit is a browser extension that helps you manage your GitHub issues and pull requests. It allows you to create, edit, comment, assign, and close issues and pull requests without leaving the page you're currently on. It also allows you to view and edit your GitHub notifications.",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/icon20x20.png",
+      "19": "assets/icons/icon20x20.png",
+      "32": "assets/icons/icon32x32.png",
+      "48": "assets/icons/icon48x48.png",
+      "128": "assets/icons/icon128x128.png"
+    },
+    "default_title": "Ungit",
+    "default_popup": "views/popup.html"
+  },
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "src/sw.js"
+  }
+}
