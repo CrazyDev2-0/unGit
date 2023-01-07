@@ -4,6 +4,7 @@ importScripts("./pr.js");
 
 let loggedIn = false;
 let username = '';
+let scheduler = null;
 
 // Read username from storage
 async function readUsernameFromStorage() {
@@ -13,6 +14,7 @@ async function readUsernameFromStorage() {
         return;
     }
     username = res.username;
+    scheduleDataFetch();
     loggedIn = true;
 }
 
@@ -36,6 +38,13 @@ async function loginCheck() {
     await readUsernameFromStorage();
     if(loggedIn) return true;
     else return  false;
+}
+
+function scheduleDataFetch(){
+    if(scheduler != null) clearInterval(scheduler);
+    scheduler = setInterval(async function () {
+        await updateLocalDatabase();
+    }, 10*60*1000);
 }
 
 async function updateLocalDatabase(){
@@ -103,6 +112,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }else if(message.type === "set-username"){
         setUsername(message.username)
             .then((isSuccess)=>{
+                scheduleDataFetch();
                 sendResponse({
                     "isSuccess" : isSuccess
                 })
@@ -160,17 +170,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 
-// chrome.runtime.sendMessage('get-user-data', (response) => {
-//     // 3. Got an asynchronous response with the data from the service worker
-//     console.log('received user data', response);
-// });
-
 // run on start
 readUsernameFromStorage();
-setInterval(async function () {
-    await updateLocalDatabase();
-}, 10*60*1000)
 
-chrome.runtime.onInstalled.addListener(async()=>{
-
-})

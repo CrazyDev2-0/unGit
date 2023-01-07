@@ -1,0 +1,48 @@
+{{#if count }}
+    {{#each data}}
+        <div class="info-card">
+          <div class="card-title"><a href="{{html_url}}" target="_blank">{{owner}}/{{repo}}</a></div>
+          <div class="card-subtitle">
+            {{title}}
+            {{#if ../isIssue}}
+                {{#each labels}}
+                    <span class="label" style="border-color: #{{color}}; color: #{{color}}">{{name}}</span>
+                {{~/each}}
+            {{/if}}
+          </div>
+          {{#unless ../isIssue}}
+              <div class="">
+                {{#each reviewers_status}}
+                  {{#ifEquals state 'APPROVED' }}
+                    <span class="label" style="background-color: {{color}}"><span class="dot red"></span>{{username}}</span>
+                  {{/ifEquals}}
+                  {{#ifEquals state 'COMMENTED' }}
+                    <span class="label" style="background-color: {{color}}"><span class="dot yellow"></span>{{username}}: {{{trimString body}}}</span>
+                  {{/ifEquals}}
+                  {{#ifEquals state 'CHANGES_REQUESTED' }}
+                    <span class="label" style="background-color: {{color}}"><span class="dot green"></span>{{username}}: {{{trimString body}}}</span>
+                  {{/ifEquals}}
+                {{~/each}}
+                {{#each requested_reviewers}}
+                    <span class="label" style="background-color: {{color}}"><span class="dot yellow"></span>{{username}}</span>
+                {{~/each}}
+              </div>
+          {{/unless}}
+          <div class="details">
+            <div class="chat-count"><img src="/assets/icons/chat.png" />{{ comments_count }}</div>
+            &nbsp; &#x2022; &nbsp;
+            <b>opened</b>&nbsp;{{created_at}} &nbsp; &#x2022; &nbsp;
+            <b>last updated</b>&nbsp;{{created_at}}
+          </div>
+        </div>
+    {{~/each}}
+{{else}}
+    <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;">
+        <p>No content available, check other categories</p>
+    </div>
+{{/if}}

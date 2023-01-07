@@ -15,8 +15,11 @@
     <script src="/src/vendor/jquery.min.js"></script>
     <!-- Load axios.js -->
     <script src="/src/vendor/axios.js"></script>
-    <!-- Load herlper.js -->
+    <!-- Load helper.js -->
     <script src="/src/helper.js"></script>
+      <script src="/src/vendor/handlebars.js"></script>
+      <script src="/src/vendor/template_helper.js"></script>
+      <script src="/src/vendor/template.js"></script>
   </head>
   <body>
     <!-- Welcome screen -->
@@ -29,7 +32,7 @@
           placeholder="Enter your Github username"
           id="username-input"
         />
-        <button class="button is-primary is-priamry-focused" id="username-submit-btn">
+        <button class="button is-primary is-primary-focused" id="username-submit-btn">
           Get Started
         </button>
       </div>
@@ -91,32 +94,32 @@
       <div class="divider"></div>
 
         <!-- Cards list -->
-        <div class="cards-list">
-            <div class="info-card">
-                <div class="card-title">Performance Improvement</div>
-                <div class="card-subtitle">
-                    Circuitverse/mobile-app <span class="label">enhancement</span> <span class="label">enhancement</span>
-                </div>
-                <div class="">
-                    <span class="label"><span class="dot red"></span>enhancement</span>
-                    <span class="label"><span class="dot yellow"></span>enhancement</span>
-                    <span class="label"><span class="dot green"></span>enhancement</span>
-                    <span class="label">good first issue</span>
-                </div>
-                <div class="details">
-                    <div class="chat-count">
-                        <img src="/assets/icons/chat.png" />69
-                    </div>
-                    &nbsp;
-                    &#x2022;
-                    &nbsp;
-                    <b>opened</b>&nbsp;28-12-2021
-                    &nbsp;
-                    &#x2022;
-                    &nbsp;
-                    <b>last updated</b>&nbsp;28-12-2021
-                </div>
-            </div>
+        <div class="cards-list" id="cards-list">
+<!--            <div class="info-card">-->
+<!--                <div class="card-title">Performance Improvement</div>-->
+<!--                <div class="card-subtitle">-->
+<!--                    Circuitverse/mobile-app <span class="label">enhancement</span> <span class="label">enhancement</span>-->
+<!--                </div>-->
+<!--                <div class="">-->
+<!--                    <span class="label"><span class="dot red"></span>enhancement</span>-->
+<!--                    <span class="label"><span class="dot yellow"></span>enhancement</span>-->
+<!--                    <span class="label"><span class="dot green"></span>enhancement</span>-->
+<!--                    <span class="label">good first issue</span>-->
+<!--                </div>-->
+<!--                <div class="details">-->
+<!--                    <div class="chat-count">-->
+<!--                        <img src="/assets/icons/chat.png" />69-->
+<!--                    </div>-->
+<!--                    &nbsp;-->
+<!--                    &#x2022;-->
+<!--                    &nbsp;-->
+<!--                    <b>opened</b>&nbsp;28-12-2021-->
+<!--                    &nbsp;-->
+<!--                    &#x2022;-->
+<!--                    &nbsp;-->
+<!--                    <b>last updated</b>&nbsp;28-12-2021-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 

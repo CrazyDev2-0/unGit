@@ -17,11 +17,14 @@ async function findIssues(username, type) {
         per_page: 10
     });
     return result.items.map(el => {
+        const urlParsed = el.html_url.match(/(^https:\/\/github.com)?\/(?<org>.*)\/(?<repo>.*)(\/issues.*)/).groups;
         return {
             id: el.number,
             title: el.title,
             api_url: el.url,
             html_url: el.html_url,
+            owner: urlParsed.org,
+            repo: urlParsed.repo,
             labels: el.labels.map(el => {
                 return {
                     color: el.color,

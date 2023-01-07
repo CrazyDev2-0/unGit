@@ -60,3 +60,26 @@ Output format
 Reviewers Functions [Special for Awaiting Review and Under Review]
 - Requested reviewers who have done nothing - findPRRequestedReviewers(orgName, repoName, id)
 - Reviewers who have interacted a bit findPRReviewersStatus(orgName, repoName, id)
+
+```js
+    {
+      "api_url": "https://api.github.com/repos/Tanmoy741127/imagine_cup_phonemic/issues/2",
+      "comments_count": 0,
+      "created_at": "2023-01-07T13:58:36Z",
+      "html_url": "https://github.com/Tanmoy741127/imagine_cup_phonemic/pull/2",
+      "id": 2,
+      "labels": [],
+      "owner": "Tanmoy741127",
+      "repo": "imagine_cup_phonemic",
+      "requested_reviewers": [
+        {
+          "avatar_url": "https://avatars.githubusercontent.com/u/57363826?v=4",
+          "html_url": "https://github.com/Tanmoy741127",
+          "username": "Tanmoy741127"
+        }
+      ],
+      "title": "Patch 1",
+      "updated_at": "2023-01-07T14:00:33Z"
+    }
+```
+

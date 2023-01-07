@@ -12,6 +12,11 @@ let selectedCategory = "assigned";
 //     console.log('received user data', response);
 // });
 
+
+function openURL(url){
+    chrome.tabs.create({ url: url });
+}
+
 // Check login status
 function checkLoginStatus() {
     chrome.runtime.sendMessage({
@@ -35,16 +40,14 @@ function fetchDetailsFromBackend(){
             type: "fetch-issues",
             category: selectedCategory
         }, (response) => {
-            // 3. Got an asynchronous response with the data from the service worker
-            console.log('received user data', response);
+            updateCardList(response);
         });
     }else {
         chrome.runtime.sendMessage({
             type: "fetch-prs",
             category: selectedCategory
         }, (response) => {
-            // 3. Got an asynchronous response with the data from the service worker
-            console.log('received user data', response);
+            updateCardList(response);
         });
     }
 }
@@ -105,7 +108,17 @@ function onClickPRCategory(category){
     fetchDetailsFromBackend();
 }
 
-
+// UI Update Major Function
+const template = `
+{{#each data}}
+    <h1>{{title}}</h1>
+{{~/each}}
+`
+function updateCardList(response){
+    console.log('received user data', response);
+    // console.log(Handlebars.compile(template)(response));
+    $("#cards-list").html(Handlebars.templates['list.template'](response));
+}
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
