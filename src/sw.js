@@ -32,6 +32,10 @@ async function setUsername(usernameNew){
     }
 }
 
+// Signout
+async function signOut()    {
+    await chrome.storage.local.clear();
+}
 // Return login status
 async function loginCheck() {
     if(loggedIn) return true;
@@ -42,7 +46,6 @@ async function loginCheck() {
 
 function scheduleDataFetch(){
     if(scheduler != null) clearInterval(scheduler);
-    updateLocalDatabase();
     scheduler = setInterval(async function () {
         await updateLocalDatabase();
     }, 60*1000);
@@ -158,7 +161,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }else if(message.type === "set-username"){
         setUsername(message.username)
             .then((isSuccess)=>{
+                // After Signing In this is getting called, the schedule
+                console.log('RUNTIME CALL');
                 scheduleDataFetch();
+                sendResponse({
+                    "isSuccess" : isSuccess
+                })
+            })
+    }else if(message.type === "signout"){
+        signOut()
+            .then((isSuccess)=>{
+                // After Signing out this is getting called, username is cleared, setInterval is not unmounted
+                console.log('SIGNOUT CALL');
                 sendResponse({
                     "isSuccess" : isSuccess
                 })
