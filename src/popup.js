@@ -33,6 +33,17 @@ function checkLoginStatus() {
     });
 }
 
+// signout
+function signout()  {
+    chrome.runtime.sendMessage({
+        "type" : "signout"
+    }, (response) => {
+        console.log(response);
+        $("#second-screen").addClass("hidden");
+        $("#welcome-screen").removeClass("hidden");
+    });
+}
+
 // Ask for details
 function fetchDetailsFromBackend(){
     if(isIssueTabSelected){
@@ -125,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
     onClickIssueBtn();
 })
+$("#signout").click(signout);
 $("#username-submit-btn").click(onClickSubmitBtn);
 $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
