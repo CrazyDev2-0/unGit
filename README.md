@@ -1,85 +1,30 @@
-## Issues
+![Logo](./assets/img/full_logo.png)
 
-Assigned - findIssues(username, IssueType.ASSIGNED)
-Created - findIssues(username, IssueType.CREATED)
-Mentioned - findIssues(username, IssueType.MENTIONED)
+### Manage Your OpenSource in One Place
 
-Output format
+- A chrome extension to track and manage all your **PRs** and **Issues**. Get notified instantly when updated.
 
-```js
-  {
-    id: 3311,
-    title: 'Add a welcome message to all the new users ',
-    api_url: 'https://api.github.com/repos/CircuitVerse/CircuitVerse/issues/3311',
-    html_url: 'https://github.com/CircuitVerse/CircuitVerse/issues/3311',
-    labels:
-        [
-            {
-                id: 1237826947,
-                node_id: 'MDU6TGFiZWwxMjM3ODI2OTQ3',
-                url: 'https://api.github.com/repos/CircuitVerse/CircuitVerse/labels/%F0%9F%8C%9F%20feature',
-                name: '🌟 feature',
-                color: '0e8a16',
-                default: false,
-                description: ''
-            }
-        ],
-    comments_count: 8,
-    created_at: 2022 - 10 - 08T09: 45: 57.000Z,
-    updated_at: 2023 - 01 - 06T15: 40: 13.000Z
-}
+## Tech Stack:
 
-```
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
+![Google Chrome](https://img.shields.io/badge/Google%20Chrome-4285F4?style=for-the-badge&logo=GoogleChrome&logoColor=white)
 
-## Pull Requests
+## Installation and Usage:
 
-Output format
+- **Download**: Download the source Zip/Clone the repository.<br>
+![Screenshot](./assets/img/1.png)
+- **Open Chrome > goto &#8942; > Select More Tools Option > Switch On the Developer Mode > Select Load Unpacked Then Select the Source Folder.**<br>
+![Screenshot](./assets/img/2.png) <br>
+![Screenshot](./assets/img/3.png)
+- Enter your **GitHub UserID** to enter and use it.
 
-```js
-  {
-    id: 3416,
-    title: 'Circuitverse UI update',
-    owner: 'CircuitVerse',
-    repo: 'CircuitVerse',
-    api_url: 'https://api.github.com/repos/CircuitVerse/CircuitVerse/issues/3416',
-    html_url: 'https://github.com/CircuitVerse/CircuitVerse/pull/3416',
-    labels: [],
-    comments_count: 5,
-    created_at: 2022-12-19T07:50:27.000Z,
-    updated_at: 2022-12-26T06:25:11.000Z
-  }
-```
+### Contributors:
 
-- Draft - findPR_Draft(username)
-- Awaiting Review (All reviewers pending ) - findPR_AwaitingReview(username)
-- Under Review (At least one reviewer interacted with it) - findPR_UnderReview(username)
-- CI Succeed PRs - findPR_CISucceed(username)
-- CI Failed PRs - findPR_CIFailed(username)
-- Merged PRs [Last 3 days] - findPR_Merged(username)
-
-Reviewers Functions [Special for Awaiting Review and Under Review]
-- Requested reviewers who have done nothing - findPRRequestedReviewers(orgName, repoName, id)
-- Reviewers who have interacted a bit findPRReviewersStatus(orgName, repoName, id)
-
-```js
-    {
-      "api_url": "https://api.github.com/repos/Tanmoy741127/imagine_cup_phonemic/issues/2",
-      "comments_count": 0,
-      "created_at": "2023-01-07T13:58:36Z",
-      "html_url": "https://github.com/Tanmoy741127/imagine_cup_phonemic/pull/2",
-      "id": 2,
-      "labels": [],
-      "owner": "Tanmoy741127",
-      "repo": "imagine_cup_phonemic",
-      "requested_reviewers": [
-        {
-          "avatar_url": "https://avatars.githubusercontent.com/u/57363826?v=4",
-          "html_url": "https://github.com/Tanmoy741127",
-          "username": "Tanmoy741127"
-        }
-      ],
-      "title": "Patch 1",
-      "updated_at": "2023-01-07T14:00:33Z"
-    }
-```
-
+- **Team CrazyDev**:
+  - [Amartya Chakraborty](https://github.com/cAmartya)
+  - [Tanmoy Sarkar](https://github.com/Tanmoy741127)
+  - [Debarghya Maitra](https://github.com/The-Debarghya)
+  - [Snehanjan Roy](https://github.com/Snehanjan2001)
