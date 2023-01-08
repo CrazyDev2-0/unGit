@@ -98,27 +98,59 @@ function startNewDataCheckingScheduler(){
 
 // UI Related Functions
 function  onClickUsernameSubmitBtn(){
+    $("#github-username-not-found-helper").addClass("hidden");
+    $("#username-input").removeClass('is-danger');
+
     let user = $("#username-input").val();
-    chrome.runtime.sendMessage({
-        "type" : "set-username",
-        "username": user
-    }, (response) => {
-        if(response.isSuccess){
-            $("#welcome-screen").addClass("hidden");
-            $("#second-screen").removeClass("hidden");
-            loggedIn = true;
-            $("#cards-list").html(`
-                <div style="
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-                    height: 100%;">
-                    <p>Please wait. First time it can take few minutes</p>
-                </div>
-            `);
-        }
-    });
+
+    fetch(`https://api.github.com/users/${user}`)
+        .then((res)=>  {
+            if(res.status !== 200) throw Error("GitHub Username not found");
+            chrome.runtime.sendMessage({
+                "type" : "set-username",
+                "username": user
+            }, (response) => {
+                if(response.isSuccess){
+                    $("#welcome-screen").addClass("hidden");
+                    $("#second-screen").removeClass("hidden");
+                    loggedIn = true;
+                    $("#cards-list").html(`
+                        <div style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 100%;">
+                            <p>Please wait. First time it can take few minutes</p>
+                        </div>
+                    `);
+                }
+            });
+        }).catch((e)=>   {
+            console.log(e);
+            $("#username-input").addClass('is-danger');
+            $("#github-username-not-found-helper").removeClass("hidden");
+        });
+    // chrome.runtime.sendMessage({
+    //     "type" : "set-username",
+    //     "username": user
+    // }, (response) => {
+    //     if(response.isSuccess){
+    //         $("#welcome-screen").addClass("hidden");
+    //         $("#second-screen").removeClass("hidden");
+    //         loggedIn = true;
+    //         $("#cards-list").html(`
+    //             <div style="
+    //                 display: flex;
+    //                 justify-content: center;
+    //                 align-items: center;
+    //                 width: 100%;
+    //                 height: 100%;">
+    //                 <p>Please wait. First time it can take few minutes</p>
+    //             </div>
+    //         `);
+    //     }
+    // });
 }
 
 function onClickIssueBtn(){

@@ -25,18 +25,19 @@
   <body>
     <!-- Welcome screen -->
     <div class="page is-flex is-flex-direction-column is-justify-content-center is-align-items-center hidden" id="welcome-screen">
-      <img src="/assets/img/full_logo.png" alt="Ungit" height="200px" />
-      <div class="is-flex is-flex-direction-column mt-6">
+      <img src="/assets/img/full_logo.png" alt="Ungit" style="width: 40vw; margin-bottom: 20px;" />
+      <div class="is-flex is-flex-direction-row mt-6" style="width: 75vw">
         <input
-          class="input mb-2 is-primary"
+          class="input mb-2 is-dark mr-2"
           type="text"
           placeholder="Enter your Github username"
           id="username-input"
         />
-        <button class="button is-primary is-primary-focused" id="username-submit-btn">
+        <button class="button is-dark is-dark-focused has-text-weight-medium" id="username-submit-btn">
           Get Started
         </button>
       </div>
+      <p class="has-text-danger hidden" id="github-username-not-found-helper">GitHub Username Not Found !</p>
     </div>
 
 
