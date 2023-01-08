@@ -60,6 +60,12 @@ function scheduleDataFetch(){
     }, 5*60*1000);
 }
 
+
+function getVersionNo(newData, oldData, currentVersion){
+    if(JSON.stringify(newData) === JSON.stringify(oldData)) return currentVersion;
+    return currentVersion+1;
+}
+
 async function updateLocalDatabase(){
     // Issues
     // IssueType.ASSIGNED
@@ -108,7 +114,17 @@ async function updateLocalDatabase(){
         "ci_succeed_prs": CISucceedPRs,
         "ci_failed_prs": CIFailedPRs,
         "awaiting_review_prs": AwaitingReviewPRs,
-        "under_review_prs": UnderReviewPRs
+        "under_review_prs": UnderReviewPRs,
+
+        "assigned_issues_version": getVersionNo(assignedIssues, oldDetails.assigned_issues,oldDetails.assigned_issues_version || 0),
+        "created_issues_version": getVersionNo(createdIssues, oldDetails.created_issues,oldDetails.created_issues_version || 0),
+        "mentioned_issues_version": getVersionNo(mentionedIssues, oldDetails.mentioned_issues,oldDetails.mentioned_issues_version || 0),
+        "drafted_prs_version": getVersionNo(draftedPRs, oldDetails.drafted_prs,oldDetails.drafted_prs_version || 0),
+        "merged_prs_version": getVersionNo(mergedPRs, oldDetails.merged_prs,oldDetails.merged_prs_version || 0),
+        "ci_succeed_prs_version": getVersionNo(CISucceedPRs, oldDetails.ci_succeed_prs,oldDetails.ci_succeed_prs_version || 0),
+        "ci_failed_prs_version": getVersionNo(CIFailedPRs, oldDetails.ci_failed_prs,oldDetails.ci_failed_prs_version || 0),
+        "awaiting_review_prs_version": getVersionNo(AwaitingReviewPRs, oldDetails.awaiting_review_prs,oldDetails.awaiting_review_prs_version || 0),
+        "under_review_prs_version": getVersionNo(UnderReviewPRs, oldDetails.under_review_prs,oldDetails.under_review_prs_version || 0)
     })
 
     // Fetch new details
@@ -230,6 +246,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     })
                 }
             })
+    }else if(message.type === "check-for-new-date"){
+        let isIssue = message.isIssue;
+        let category = message.category;
+        let dataVersion = message.dataVersion;
+
+
     }
 
     return true;

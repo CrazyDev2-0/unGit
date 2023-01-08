@@ -3,6 +3,7 @@ console.log("popup.js loaded");
 let loggedIn = false;
 let isIssueTabSelected = true;
 let selectedCategory = "assigned";
+let dataVersion = 0;
 
 // Check login status
 function checkLoginStatus() {
@@ -32,7 +33,7 @@ function signout()  {
     });
 }
 
-// Ask for details
+// Ask for details via background call
 function fetchDetailsFromBackend(){
     if(isIssueTabSelected){
         chrome.runtime.sendMessage({
@@ -49,6 +50,11 @@ function fetchDetailsFromBackend(){
             updateCardList(response);
         });
     }
+}
+
+// Scheduler
+function startAutoRefreshDataScheduler(){
+
 }
 
 // UI Related Functions
@@ -86,6 +92,7 @@ function onClickPRBtn(){
 
 function onClickIssueCategory(category){
     selectedCategory = category;
+    dataVersion = 0;
     $("#issue-category-assigned").removeClass("is-active");
     $("#issue-category-mentioned").removeClass("is-active");
     $("#issue-category-created").removeClass("is-active");
@@ -96,6 +103,7 @@ function onClickIssueCategory(category){
 
 function onClickPRCategory(category){
     selectedCategory = category;
+    dataVersion = 0;
     $("#pr-category-under-review").removeClass("is-active");
     $("#pr-category-merged").removeClass("is-active");
     $("#pr-category-ci-passed").removeClass("is-active");
@@ -109,6 +117,7 @@ function onClickPRCategory(category){
 
 // UI Update from Response | Major Function
 function updateCardList(response){
+    // TODO versioning support
     $("#cards-list").html(Handlebars.templates['list.template'](response));
 }
 
