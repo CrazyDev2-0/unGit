@@ -26,6 +26,7 @@ async function setUsername(usernameNew){
         })
         loggedIn = true;
         username = usernameNew;
+        scheduleDataFetch();
         return true;
     }catch (e) {
         return  false;
@@ -43,7 +44,7 @@ async function loginCheck() {
 function scheduleDataFetch(){
     if(scheduler != null) clearInterval(scheduler);
     updateLocalDatabase();
-    scheduler = setInterval(async function () {
+    setInterval(async function () {
         await updateLocalDatabase();
     }, 60*1000);
 }
@@ -158,7 +159,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }else if(message.type === "set-username"){
         setUsername(message.username)
             .then((isSuccess)=>{
-                scheduleDataFetch();
                 sendResponse({
                     "isSuccess" : isSuccess
                 })
