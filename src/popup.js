@@ -1,21 +1,8 @@
 console.log("popup.js loaded");
 
+let loggedIn = false;
 let isIssueTabSelected = true;
 let selectedCategory = "assigned";
-
-// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-//     console.log("popup received message", message);
-// });
-//
-// chrome.runtime.sendMessage('get-user-data', (response) => {
-//     // 3. Got an asynchronous response with the data from the service worker
-//     console.log('received user data', response);
-// });
-
-
-function openURL(url){
-    chrome.tabs.create({ url: url });
-}
 
 // Check login status
 function checkLoginStatus() {
@@ -30,6 +17,18 @@ function checkLoginStatus() {
             $("#second-screen").addClass("hidden");
             $("#welcome-screen").removeClass("hidden");
         }
+        loggedIn = response.isLoggedin || false;
+    });
+}
+
+// signout
+function signout()  {
+    chrome.runtime.sendMessage({
+        "type" : "signout"
+    }, (response) => {
+        loggedIn = false;
+        $("#second-screen").addClass("hidden");
+        $("#welcome-screen").removeClass("hidden");
     });
 }
 
@@ -59,10 +58,10 @@ function  onClickSubmitBtn(){
         "type" : "set-username",
         "username": user
     }, (response) => {
-        console.log(response);
         if(response.isSuccess){
             $("#welcome-screen").addClass("hidden");
             $("#second-screen").removeClass("hidden");
+            loggedIn = true;
         }
     });
 }
@@ -108,15 +107,8 @@ function onClickPRCategory(category){
     fetchDetailsFromBackend();
 }
 
-// UI Update Major Function
-const template = `
-{{#each data}}
-    <h1>{{title}}</h1>
-{{~/each}}
-`
+// UI Update from Response | Major Function
 function updateCardList(response){
-    console.log('received user data', response);
-    // console.log(Handlebars.compile(template)(response));
     $("#cards-list").html(Handlebars.templates['list.template'](response));
 }
 
@@ -124,7 +116,8 @@ function updateCardList(response){
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
     onClickIssueBtn();
-})
+});
+$("#signout").click(signout);
 $("#username-submit-btn").click(onClickSubmitBtn);
 $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);

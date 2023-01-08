@@ -211,3 +211,9 @@ div{
     align-items: center;
     column-gap: 6px;
 }
+
+/*signout*/
+#signout{
+    margin-left: auto;
+    cursor: pointer;
+}
