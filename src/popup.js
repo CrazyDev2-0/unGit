@@ -4,6 +4,7 @@ let loggedIn = false;
 let isIssueTabSelected = true;
 let selectedCategory = "assigned";
 let dataVersion = 0;
+let scheduler = null;
 
 // Check login status
 function checkLoginStatus() {
@@ -28,8 +29,19 @@ function signout()  {
         "type" : "signout"
     }, (response) => {
         loggedIn = false;
+        dataVersion = 0;
         $("#second-screen").addClass("hidden");
         $("#welcome-screen").removeClass("hidden");
+        $("#cards-list").html(`
+        <div style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;">
+            <p>Please wait. First time it can take few minutes</p>
+        </div>
+        `);
     });
 }
 
@@ -40,6 +52,7 @@ function fetchDetailsFromBackend(){
             type: "fetch-issues",
             category: selectedCategory
         }, (response) => {
+            dataVersion = response.version;
             updateCardList(response);
         });
     }else {
@@ -47,18 +60,44 @@ function fetchDetailsFromBackend(){
             type: "fetch-prs",
             category: selectedCategory
         }, (response) => {
+            dataVersion = response.version;
             updateCardList(response);
         });
     }
 }
 
 // Scheduler
-function startAutoRefreshDataScheduler(){
+function startNewDataCheckingScheduler(){
+    if(scheduler != null) clearInterval(scheduler);
+    // Run one time
+    chrome.runtime.sendMessage({
+        type: "check-for-new-data",
+        isIssue: isIssueTabSelected,
+        category: selectedCategory,
+        dataVersion: dataVersion
+    }, (response) => {
+        if(response.update_available)   {
+            fetchDetailsFromBackend();
+        }
+    })
+    // run every 10 seconds
+    scheduler = setInterval(async function () {
+        chrome.runtime.sendMessage({
+            type: "check-for-new-data",
+            isIssue: isIssueTabSelected,
+            category: selectedCategory,
+            dataVersion: dataVersion
+        }, (response) => {
+            if(response.update_available)   {
+                fetchDetailsFromBackend();
+            }
+        })
+    }, 10*1000);
 
 }
 
 // UI Related Functions
-function  onClickSubmitBtn(){
+function  onClickUsernameSubmitBtn(){
     let user = $("#username-input").val();
     chrome.runtime.sendMessage({
         "type" : "set-username",
@@ -68,6 +107,16 @@ function  onClickSubmitBtn(){
             $("#welcome-screen").addClass("hidden");
             $("#second-screen").removeClass("hidden");
             loggedIn = true;
+            $("#cards-list").html(`
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;">
+                    <p>Please wait. First time it can take few minutes</p>
+                </div>
+            `);
         }
     });
 }
@@ -117,7 +166,6 @@ function onClickPRCategory(category){
 
 // UI Update from Response | Major Function
 function updateCardList(response){
-    // TODO versioning support
     $("#cards-list").html(Handlebars.templates['list.template'](response));
 }
 
@@ -125,9 +173,10 @@ function updateCardList(response){
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
     onClickIssueBtn();
+    startNewDataCheckingScheduler();
 });
 $("#signout").click(signout);
-$("#username-submit-btn").click(onClickSubmitBtn);
+$("#username-submit-btn").click(onClickUsernameSubmitBtn);
 $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
 

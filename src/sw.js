@@ -173,7 +173,19 @@ function changed(oldState, newState) {
     }
     return false;
 }
-
+function genCategory(isIssue, category)  {
+    if(isIssue) {
+        return `${category}_issues`;
+    }else{
+        if(category === "under-review") return "under_review_prs"
+        else if(category === "awaiting-review") return "awaiting_review_prs"
+        else if(category === "merged") return "merged_prs"
+        else if(category === "draft") return "drafted_prs"
+        else if(category === "ci-passed") return "ci_succeed_prs"
+        else if(category === "ci-failed") return "ci_failed_prs"
+        else return ""
+    }
+}
 // Message listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if(message.type === "get-login-status"){
@@ -201,57 +213,72 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             })
     }else if(message.type === "fetch-issues"){
         const category = message.category;
-        const key = `${category}_issues`;
-        chrome.storage.local.get([key])
+        const key = genCategory(true, category);
+        chrome.storage.local.get([key, `${key}_version`])
             .then((e)=>{
                 let result = e[key];
                 if(result === undefined || result === null || result === ""){
                     sendResponse({
                         "isIssue": true,
                         "count" : 0,
-                        "data" : []
+                        "data" : [],
+                        "version" : 0
                     })
                 }else{
                     sendResponse({
                         "isIssue": true,
                         "count" : result.length,
-                        "data" : result
+                        "data" : result,
+                        "version" : e[`${key}_version`]
                     })
                 }
             })
     }else if(message.type === "fetch-prs"){
         const category = message.category;
-        let key = "";
-        if(category === "under-review") key = "under_review_prs"
-        else if(category === "awaiting-review") key = "awaiting_review_prs"
-        else if(category === "merged") key = "merged_prs"
-        else if(category === "draft") key = "drafted_prs"
-        else if(category === "ci-passed") key = "ci_succeed_prs"
-        else if(category === "ci-failed") key = "ci_failed_prs"
-        if(category === "") return  true;
-        chrome.storage.local.get([key])
+        let key = genCategory(false, category);
+        if(key === "") return  true;
+        chrome.storage.local.get([key, `${key}_version`])
             .then((e)=>{
                 let result = e[key];
                 if(result === undefined || result === null || result === ""){
                     sendResponse({
                         "isIssue": false,
                         "count" : 0,
-                        "data" : []
+                        "data" : [],
+                        "version" : 0
                     })
                 }else {
                     sendResponse({
                         "isIssue": false,
                         "count" : result.length,
-                        "data" : result
+                        "data" : result,
+                        "version" : e[`${key}_version`]
                     })
                 }
             })
-    }else if(message.type === "check-for-new-date"){
+    }else if(message.type === "check-for-new-data"){
         let isIssue = message.isIssue;
         let category = message.category;
-        let dataVersion = message.dataVersion;
+        let clientDataVersion = message.dataVersion;
 
+        let key = genCategory(isIssue, category);
+        let versionKey = `${key}_version`;
 
+        chrome.storage.local.get([versionKey])
+            .then((result)=>{
+                let latestDataVersion =  result[versionKey] || 0;
+                if(latestDataVersion === clientDataVersion){
+                    // send no
+                    sendResponse({
+                        "update_available": false
+                    })
+                }else {
+                    // send yes
+                    sendResponse({
+                        "update_available": true
+                    })
+                }
+            })
     }
 
     return true;
