@@ -1,7 +1,7 @@
 {
-  "name": "UnGit - The easiest way to manage Issues & PRs",
+  "name": "UnGit",
   "version": "1.0.0",
-  "description": "UnGit is an all-in-one solution to manage your GitHub issues and pull requests. It will update you on any status update of any repository. It provides an easy-to-use dashboard to know about your contribution station at a glance.",
+  "description": "Ungit is a one stop easy-to-use solution to track your issues & PRs. Get notified instantly on any updates.",
   "manifest_version": 3,
   "action": {
     "default_icon": {
