@@ -14,17 +14,17 @@
               <div class="">
                 {{#each reviewers_status}}
                   {{#ifEquals state 'APPROVED' }}
-                    <span class="label" style="background-color: {{color}}"><span class="dot red"></span>{{username}}</span>
+                    <a href="{{html_url}}" target="_blank"><span class="label" style="background-color: {{color}}"><span class="dot green"></span>{{username}}</span></a>
                   {{/ifEquals}}
                   {{#ifEquals state 'COMMENTED' }}
-                    <span class="label" style="background-color: {{color}}"><span class="dot yellow"></span>{{username}}: {{{trimString body}}}</span>
+                    <a href="{{html_url}}" target="_blank"><span class="label" style="background-color: {{color}}"><span class="dot blue"></span>{{username}}{{{trimString body}}}</span></a>
                   {{/ifEquals}}
                   {{#ifEquals state 'CHANGES_REQUESTED' }}
-                    <span class="label" style="background-color: {{color}}"><span class="dot green"></span>{{username}}: {{{trimString body}}}</span>
+                    <a href="{{html_url}}" target="_blank"><span class="label" style="background-color: {{color}}"><span class="dot red"></span>{{username}}{{{trimString body}}}</span></a>
                   {{/ifEquals}}
                 {{~/each}}
                 {{#each requested_reviewers}}
-                    <span class="label" style="background-color: {{color}}"><span class="dot yellow"></span>{{username}}</span>
+                    <a href="{{html_url}}" target="_blank"><span class="label" style="background-color: {{color}}"><span class="dot yellow"></span>{{username}}</span></a>
                 {{~/each}}
               </div>
           {{/unless}}

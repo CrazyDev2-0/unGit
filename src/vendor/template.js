@@ -91,11 +91,13 @@
                 return undefined
             };
 
-            return "                    <span class=\"label\" style=\"background-color: "
-                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":17,"column":65},"end":{"line":17,"column":74}}}) : helper)))
-                + "\"><span class=\"dot red\"></span>"
-                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":17,"column":105},"end":{"line":17,"column":117}}}) : helper)))
-                + "</span>\n";
+            return "                    <a href=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"html_url") || (depth0 != null ? lookupProperty(depth0,"html_url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"html_url","hash":{},"data":data,"loc":{"start":{"line":17,"column":29},"end":{"line":17,"column":41}}}) : helper)))
+                + "\" target=\"_blank\"><span class=\"label\" style=\"background-color: "
+                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":17,"column":104},"end":{"line":17,"column":113}}}) : helper)))
+                + "\"><span class=\"dot green\"></span>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":17,"column":146},"end":{"line":17,"column":158}}}) : helper)))
+                + "</span></a>\n";
         },"10":function(container,depth0,helpers,partials,data) {
             var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -104,13 +106,14 @@
                 return undefined
             };
 
-            return "                    <span class=\"label\" style=\"background-color: "
-                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":20,"column":65},"end":{"line":20,"column":74}}}) : helper)))
-                + "\"><span class=\"dot yellow\"></span>"
-                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":20,"column":108},"end":{"line":20,"column":120}}}) : helper)))
-                + ": "
-                + ((stack1 = (lookupProperty(helpers,"trimString")||(depth0 && lookupProperty(depth0,"trimString"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"body") : depth0),{"name":"trimString","hash":{},"data":data,"loc":{"start":{"line":20,"column":122},"end":{"line":20,"column":143}}})) != null ? stack1 : "")
-                + "</span>\n";
+            return "                    <a href=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"html_url") || (depth0 != null ? lookupProperty(depth0,"html_url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"html_url","hash":{},"data":data,"loc":{"start":{"line":20,"column":29},"end":{"line":20,"column":41}}}) : helper)))
+                + "\" target=\"_blank\"><span class=\"label\" style=\"background-color: "
+                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":20,"column":104},"end":{"line":20,"column":113}}}) : helper)))
+                + "\"><span class=\"dot blue\"></span>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":20,"column":145},"end":{"line":20,"column":157}}}) : helper)))
+                + ((stack1 = (lookupProperty(helpers,"trimString")||(depth0 && lookupProperty(depth0,"trimString"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"body") : depth0),{"name":"trimString","hash":{},"data":data,"loc":{"start":{"line":20,"column":157},"end":{"line":20,"column":178}}})) != null ? stack1 : "")
+                + "</span></a>\n";
         },"12":function(container,depth0,helpers,partials,data) {
             var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -119,13 +122,14 @@
                 return undefined
             };
 
-            return "                    <span class=\"label\" style=\"background-color: "
-                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":23,"column":65},"end":{"line":23,"column":74}}}) : helper)))
-                + "\"><span class=\"dot green\"></span>"
-                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":23,"column":107},"end":{"line":23,"column":119}}}) : helper)))
-                + ": "
-                + ((stack1 = (lookupProperty(helpers,"trimString")||(depth0 && lookupProperty(depth0,"trimString"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"body") : depth0),{"name":"trimString","hash":{},"data":data,"loc":{"start":{"line":23,"column":121},"end":{"line":23,"column":142}}})) != null ? stack1 : "")
-                + "</span>\n";
+            return "                    <a href=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"html_url") || (depth0 != null ? lookupProperty(depth0,"html_url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"html_url","hash":{},"data":data,"loc":{"start":{"line":23,"column":29},"end":{"line":23,"column":41}}}) : helper)))
+                + "\" target=\"_blank\"><span class=\"label\" style=\"background-color: "
+                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":23,"column":104},"end":{"line":23,"column":113}}}) : helper)))
+                + "\"><span class=\"dot red\"></span>"
+                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":23,"column":144},"end":{"line":23,"column":156}}}) : helper)))
+                + ((stack1 = (lookupProperty(helpers,"trimString")||(depth0 && lookupProperty(depth0,"trimString"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"body") : depth0),{"name":"trimString","hash":{},"data":data,"loc":{"start":{"line":23,"column":156},"end":{"line":23,"column":177}}})) != null ? stack1 : "")
+                + "</span></a>\n";
         },"14":function(container,depth0,helpers,partials,data) {
             var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
                 if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
@@ -134,11 +138,13 @@
                 return undefined
             };
 
-            return "                    <span class=\"label\" style=\"background-color: "
-                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":27,"column":65},"end":{"line":27,"column":74}}}) : helper)))
+            return "                    <a href=\""
+                + alias4(((helper = (helper = lookupProperty(helpers,"html_url") || (depth0 != null ? lookupProperty(depth0,"html_url") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"html_url","hash":{},"data":data,"loc":{"start":{"line":27,"column":29},"end":{"line":27,"column":41}}}) : helper)))
+                + "\" target=\"_blank\"><span class=\"label\" style=\"background-color: "
+                + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":27,"column":104},"end":{"line":27,"column":113}}}) : helper)))
                 + "\"><span class=\"dot yellow\"></span>"
-                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":27,"column":108},"end":{"line":27,"column":120}}}) : helper)))
-                + "</span>";
+                + alias4(((helper = (helper = lookupProperty(helpers,"username") || (depth0 != null ? lookupProperty(depth0,"username") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"username","hash":{},"data":data,"loc":{"start":{"line":27,"column":147},"end":{"line":27,"column":159}}}) : helper)))
+                + "</span></a>";
         },"16":function(container,depth0,helpers,partials,data) {
             return "    <div style=\"\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        width: 100%;\n        height: 100%;\">\n        <p>No content available, check other categories</p>\n    </div>\n";
         },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {

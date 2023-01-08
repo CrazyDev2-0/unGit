@@ -96,7 +96,7 @@ async function findPRReviewersStatus(orgName, repoName, id)  {
         return {
             username: el.user.login,
             avatar_url: el.user.avatar_url,
-            html_url: el.user.html_url,
+            html_url: el.html_url,
             body: el.body,
             state: el.state
 
