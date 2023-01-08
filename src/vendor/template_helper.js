@@ -8,3 +8,13 @@ Handlebars.registerHelper('trimString', function(passedString) {
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
 });
+
+Handlebars.registerHelper('fromNow', function(date) {
+    let str = date;
+    try {
+        str = moment(date).fromNow();
+    }catch (e) {
+        console.log(e);
+    }
+    return str;
+})

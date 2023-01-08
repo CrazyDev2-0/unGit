@@ -32,9 +32,9 @@
                 + "          <div class=\"details\">\n            <div class=\"chat-count\"><img src=\"/assets/icons/chat.png\" />"
                 + alias4(((helper = (helper = lookupProperty(helpers,"comments_count") || (depth0 != null ? lookupProperty(depth0,"comments_count") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"comments_count","hash":{},"data":data,"loc":{"start":{"line":32,"column":72},"end":{"line":32,"column":92}}}) : helper)))
                 + "</div>\n            &nbsp; &#x2022; &nbsp;\n            <b>opened</b>&nbsp;"
-                + alias4(((helper = (helper = lookupProperty(helpers,"created_at") || (depth0 != null ? lookupProperty(depth0,"created_at") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"created_at","hash":{},"data":data,"loc":{"start":{"line":34,"column":31},"end":{"line":34,"column":45}}}) : helper)))
+                + ((stack1 = (lookupProperty(helpers,"fromNow")||(depth0 && lookupProperty(depth0,"fromNow"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"created_at") : depth0),{"name":"fromNow","hash":{},"data":data,"loc":{"start":{"line":34,"column":31},"end":{"line":34,"column":55}}})) != null ? stack1 : "")
                 + " &nbsp; &#x2022; &nbsp;\n            <b>last updated</b>&nbsp;"
-                + alias4(((helper = (helper = lookupProperty(helpers,"created_at") || (depth0 != null ? lookupProperty(depth0,"created_at") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"created_at","hash":{},"data":data,"loc":{"start":{"line":35,"column":37},"end":{"line":35,"column":51}}}) : helper)))
+                + ((stack1 = (lookupProperty(helpers,"fromNow")||(depth0 && lookupProperty(depth0,"fromNow"))||alias2).call(alias1,(depth0 != null ? lookupProperty(depth0,"updated_at") : depth0),{"name":"fromNow","hash":{},"data":data,"loc":{"start":{"line":35,"column":37},"end":{"line":35,"column":61}}})) != null ? stack1 : "")
                 + "\n          </div>\n        </div>";
         },"3":function(container,depth0,helpers,partials,data) {
             var stack1, lookupProperty = container.lookupProperty || function(parent, propertyName) {

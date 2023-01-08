@@ -31,8 +31,8 @@
           <div class="details">
             <div class="chat-count"><img src="/assets/icons/chat.png" />{{ comments_count }}</div>
             &nbsp; &#x2022; &nbsp;
-            <b>opened</b>&nbsp;{{created_at}} &nbsp; &#x2022; &nbsp;
-            <b>last updated</b>&nbsp;{{created_at}}
+            <b>opened</b>&nbsp;{{{fromNow created_at}}} &nbsp; &#x2022; &nbsp;
+            <b>last updated</b>&nbsp;{{{fromNow updated_at}}}
           </div>
         </div>
     {{~/each}}
