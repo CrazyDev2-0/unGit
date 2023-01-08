@@ -15,10 +15,10 @@
 ## Installation and Usage:
 
 - **Download**: Download the source Zip/Clone the repository.<br>
-![Screenshot](./assets/img/1.png)
+![Screenshot](./ss/1.png)
 - **Open Chrome > goto &#8942; > Select More Tools Option > Go to Extensions Menu > Switch On the Developer Mode > Select Load Unpacked Then Select the Source Folder.**<br>
-![Screenshot](./assets/img/2.png) <br>
-![Screenshot](./assets/img/3.png)
+![Screenshot](./ss/2.png) <br>
+![Screenshot](./ss/3.png)
 - Enter your **GitHub UserID** to enter and use it.
 
 ### Contributors:
