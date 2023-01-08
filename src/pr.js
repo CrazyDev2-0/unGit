@@ -32,7 +32,7 @@ async function findPR_Draft(username){
 
 async function findPR_Merged(username)  {
     // current from list of PRs check merged field and filter only last 3 days
-    const FETCH_BEFORE_DAYS = 15; // TODO change later
+    const FETCH_BEFORE_DAYS = 7;
     var currentDate = new Date(Date.now());
     var currentDateString = datetimeToDateString(currentDate);
     var threeDaysBeforeDateString = datetimeToDateString(new Date(currentDate - FETCH_BEFORE_DAYS*24*3600*1000));
