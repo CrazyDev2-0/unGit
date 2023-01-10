@@ -1,7 +1,7 @@
 {
   "name": "UnGit",
   "version": "1.0.0",
-  "description": "Ungit is a one stop easy-to-use solution to track your issues & PRs. Get notified instantly on any updates.",
+  "description": "A one stop easy-to-use solution to track your issues & PRs",
   "manifest_version": 3,
   "action": {
     "default_icon": {
@@ -14,7 +14,7 @@
     "default_title": "UnGit",
     "default_popup": "views/popup.html"
   },
-  "permissions": ["storage", "tabs", "notifications"],
+  "permissions": ["storage", "notifications"],
   "background": {
     "service_worker": "src/sw.js"
   }
