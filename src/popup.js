@@ -2,6 +2,7 @@ console.log("popup.js loaded");
 
 let loggedIn = false;
 let isIssueTabSelected = true;
+let isTrackerTabSelected = false;
 let selectedCategory = "assigned";
 let dataVersion = 0;
 let scheduler = null;
@@ -155,20 +156,38 @@ function  onClickUsernameSubmitBtn(){
 
 function onClickIssueBtn(){
     isIssueTabSelected = true;
+    isTrackerTabSelected = false;
     $("#prs-tab").removeClass("is-active");
     $("#issues-tab").addClass("is-active");
+    $("#trackers-tab").removeClass("is-active");
     $("#pr-category-bar").addClass("hidden");
+    $("#tracker-category-bar").addClass("hidden");
     $("#issue-category-bar").removeClass("hidden");
     $("#issue-category-assigned").click();
 }
 
 function onClickPRBtn(){
     isIssueTabSelected = false;
+    isTrackerTabSelected = false;
     $("#issues-tab").removeClass("is-active");
     $("#prs-tab").addClass("is-active");
+    $("#trackers-tab").removeClass("is-active");
     $("#issue-category-bar").addClass("hidden");
+    $("#tracker-category-bar").addClass("hidden");
     $("#pr-category-bar").removeClass("hidden");
     $("#pr-category-under-review").click();
+}
+
+function onClickTrackerBtn(){
+    isIssueTabSelected = false;
+    isTrackerTabSelected = true;
+    $("#issues-tab").removeClass("is-active");
+    $("#prs-tab").removeClass("is-active");
+    $("#trackers-tab").addClass("is-active");
+    $("#issue-category-bar").addClass("hidden");
+    $("#tracker-category-bar").removeClass("hidden");
+    $("#pr-category-bar").addClass("hidden");
+
 }
 
 function onClickIssueCategory(category){
@@ -211,6 +230,7 @@ $("#signout").click(signout);
 $("#username-submit-btn").click(onClickUsernameSubmitBtn);
 $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
+$("#trackers-tab").click(onClickTrackerBtn);
 
 $("#issue-category-assigned").click(()=>onClickIssueCategory("assigned"));
 $("#issue-category-mentioned").click(()=>onClickIssueCategory("mentioned"));

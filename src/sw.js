@@ -131,13 +131,14 @@ async function updateLocalDatabase(){
     const newDetails = await chrome.storage.local.get();
     try {
         if(changed(oldDetails, newDetails)){
-            chrome.notifications.create((Math.random() + 1).toString(36).substring(7), {
-                type: 'basic',
-                iconUrl: 'https://gcdnb.pbrd.co/images/yH3va4BzDRQh.png?o=1',
-                title: 'Check UnGit for updated information',
-                message: 'If you have some update in your profile',
-                priority: 2
-            })
+            // chrome.notifications.create((Math.random() + 1).toString(36).substring(7), {
+            //     type: 'basic',
+            //     iconUrl: 'https://gcdnb.pbrd.co/images/yH3va4BzDRQh.png?o=1',
+            //     title: 'Check UnGit for updated information',
+            //     message: 'If you have some update in your profile',
+            //     priority: 2
+            // })
+            await showNotification("Check UnGit for updated information", "You have some updates", "info")
         }
     }catch (e){
         console.log("Failed to analyze changes");
