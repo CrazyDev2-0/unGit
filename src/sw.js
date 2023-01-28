@@ -210,6 +210,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     "isSuccess" : isSuccess
                 })
             })
+    }else if(message.type === "set-tracker"){
+        setTracker(message.username)
+            .then((isSuccess)=>{
+                sendResponse({
+                    "isSuccess" : isSuccess
+                })
+            })
     }else if(message.type === "signout"){
         signOut()
             .then((isSuccess)=>{

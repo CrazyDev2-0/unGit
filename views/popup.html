@@ -95,8 +95,9 @@
         </div>
 
         <!-- Tracker Category bar -->
-        <div class="roundedtabs mt-2 mb-3 hidden" id="tracker-category-bar">
-            <div class="is-flex is-flex-direction-row mt-6" style="width: -webkit-fill-available">
+        <div class="mt-2 mb-3 hidden" id="tracker-category-bar">
+
+            <div class="is-flex is-flex-direction-row mt-6" style="width: -webkit-fill-available">                
                 <input
                         class="input mb-2 is-dark mr-2"
                         type="text"
@@ -106,13 +107,31 @@
                 <input
                         class="input mb-2 is-dark mr-2"
                         type="text"
-                        placeholder="Enter your desired label"
+                        placeholder="Enter your desired labels comma-seperated"
                         id="track-label-input"
                 />
                 <button class="button is-dark is-dark-focused has-text-weight-medium" id="tracker-submit-btn">
                     SUBMIT
                 </button>
             </div>
+            <br>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Repository</th>
+                    <th>Labels</th>
+                    <th>Delete</th>
+                  </tr>  
+                </thead>
+
+                <tbody id="track-table">
+
+                </tbody>
+                         
+              </table>
+            </div>
+          </div>
 
         </div>
 

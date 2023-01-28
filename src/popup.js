@@ -6,6 +6,7 @@ let isTrackerTabSelected = false;
 let selectedCategory = "assigned";
 let dataVersion = 0;
 let scheduler = null;
+let trackList = [];
 
 // Check login status
 function checkLoginStatus() {
@@ -183,11 +184,73 @@ function onClickPRBtn(){
     $("#cards-list").removeClass("hidden");
 }
 
+function renderTrackList(){
+    html = ``;
+    for (let idx = 0; idx < trackList.length; idx++) {
+        const ele = trackList[idx];        
+        html += `
+            <tr>
+                <td>${ele.repository_name}</td>
+                <td>${ele.labels}</td>
+                <td class="track-close" id="track-${ele.id}">X</td>
+            </tr>
+        `   
+    }
+    $("#track-table").html(html);
+    trackList.map(ele => {$(`#track-${ele.id}`).on("click", ()=> {onClickRemoveTrackerBtn(ele.id)});}) 
+    
+}
 function onClickTrackerBtn(){
     console.log("CLICKED");
-    let repoUrl = $("#track-link-input").val();
+    let repoLink = $("#track-link-input").val();
     let repoLabel = $("#track-label-input").val();
-    console.log(repoUrl, repoLabel);
+    // const urlParsed = repoLink.html_url.match(/(^https:\/\/github.com)?\/(?<org>.*)\/(?<repo>.*)(\/pull.*)/).groups;
+    const urlParsed = repoLink.split("/");
+    const reqTrack = {
+        "id": parseInt(Math.random()*1000),
+        "organization_name": urlParsed[0],
+        "repository_name": urlParsed[1],
+        "labels": repoLabel,
+    }
+    console.log(reqTrack);
+    trackList.push(reqTrack);
+
+    renderTrackList();
+    
+    // fetch(`https://api.github.com/users/${user}`)
+    //     .then((res)=>  {
+    //         if(res.status !== 200) throw Error("GitHub Repository with mentioned labels not found");
+    //         chrome.runtime.sendMessage({
+    //             "type" : "set-tracker",
+    //             "track": reqTrack
+    //         }, (response) => {
+    //             if(response.isSuccess){
+    //                 let html = $("#track-table").html();
+    //                 html += `
+    //                     <tr>
+    //                         <td>${reqTrack.organization_name}</td>
+    //                         <td>${reqTrack.repository_name}</td>
+    //                         <td id=track-${trackList.length}>X</td>
+    //                     </tr>
+    //                 `
+    //                 $("#track-table").html(html);                    
+    //                 trackList.append(reqTrack);
+    //             }
+    //         });
+    //     }).catch((e)=>   {
+    //         console.log(e);
+    //         $("#username-input").addClass('is-danger');
+    //         $("#github-username-not-found-helper").removeClass("hidden");
+    //     });
+    
+}
+
+function onClickRemoveTrackerBtn(id){
+    trackList = trackList.filter(function(e){
+        return e.id !== id;
+    })
+    console.log("removed", trackList);
+    renderTrackList();
 }
 
 function onClickIssueCategory(category){
@@ -244,7 +307,7 @@ $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
 $("#trackers-tab").click(onClickTrackerCategory);
 
-$("#tracker-submit-button").click(onClickTrackerBtn);
+$("#tracker-submit-btn").click(onClickTrackerBtn);
 $("#issue-category-assigned").click(()=>onClickIssueCategory("assigned"));
 $("#issue-category-mentioned").click(()=>onClickIssueCategory("mentioned"));
 $("#issue-category-created").click(()=>onClickIssueCategory("created"));
