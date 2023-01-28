@@ -163,6 +163,13 @@ function IDMap(arg) {
     return abc
 }
 
+// Invoke notification
+async function showNotification(title, message, type) {
+    let res = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if(res.length === 0) return;
+    await chrome.tabs.sendMessage(res[0].id, {title: title, message: message, type: type})
+}
+
 function changed(oldState, newState) {
     const oldIDMap = IDMap(oldState)
     const newIDMap = IDMap(newState)

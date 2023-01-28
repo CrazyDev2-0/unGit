@@ -14,7 +14,29 @@
     "default_title": "UnGit",
     "default_popup": "views/popup.html"
   },
-  "permissions": ["storage", "notifications"],
+  "permissions": ["storage", "notifications", "tabs", "activeTab"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "src/inject.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "views/embedTool.html",
+        "styles/embedTool.css",
+        "src/embedTool.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
   "background": {
     "service_worker": "src/sw.js"
   }
