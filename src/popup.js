@@ -48,6 +48,7 @@ function signout()  {
 
 // Ask for details via background call
 function fetchDetailsFromBackend(){
+    if(isTrackerTabSelected)    return;
     if(isIssueTabSelected){
         chrome.runtime.sendMessage({
             type: "fetch-issues",
@@ -164,6 +165,8 @@ function onClickIssueBtn(){
     $("#tracker-category-bar").addClass("hidden");
     $("#issue-category-bar").removeClass("hidden");
     $("#issue-category-assigned").click();
+    
+    $("#cards-list").removeClass("hidden");
 }
 
 function onClickPRBtn(){
@@ -176,18 +179,15 @@ function onClickPRBtn(){
     $("#tracker-category-bar").addClass("hidden");
     $("#pr-category-bar").removeClass("hidden");
     $("#pr-category-under-review").click();
+    
+    $("#cards-list").removeClass("hidden");
 }
 
 function onClickTrackerBtn(){
-    isIssueTabSelected = false;
-    isTrackerTabSelected = true;
-    $("#issues-tab").removeClass("is-active");
-    $("#prs-tab").removeClass("is-active");
-    $("#trackers-tab").addClass("is-active");
-    $("#issue-category-bar").addClass("hidden");
-    $("#tracker-category-bar").removeClass("hidden");
-    $("#pr-category-bar").addClass("hidden");
-
+    console.log("CLICKED");
+    let repoUrl = $("#track-link-input").val();
+    let repoLabel = $("#track-label-input").val();
+    console.log(repoUrl, repoLabel);
 }
 
 function onClickIssueCategory(category){
@@ -215,6 +215,18 @@ function onClickPRCategory(category){
     fetchDetailsFromBackend();
 }
 
+function onClickTrackerCategory(){
+    isIssueTabSelected = false;
+    isTrackerTabSelected = true;
+    $("#issues-tab").removeClass("is-active");
+    $("#prs-tab").removeClass("is-active");
+    $("#trackers-tab").addClass("is-active");
+    $("#issue-category-bar").addClass("hidden");
+    $("#tracker-category-bar").removeClass("hidden");
+    $("#pr-category-bar").addClass("hidden");
+    $("#cards-list").addClass("hidden");
+}
+
 // UI Update from Response | Major Function
 function updateCardList(response){
     $("#cards-list").html(Handlebars.templates['list.template'](response));
@@ -230,8 +242,9 @@ $("#signout").click(signout);
 $("#username-submit-btn").click(onClickUsernameSubmitBtn);
 $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
-$("#trackers-tab").click(onClickTrackerBtn);
+$("#trackers-tab").click(onClickTrackerCategory);
 
+$("#tracker-submit-button").click(onClickTrackerBtn);
 $("#issue-category-assigned").click(()=>onClickIssueCategory("assigned"));
 $("#issue-category-mentioned").click(()=>onClickIssueCategory("mentioned"));
 $("#issue-category-created").click(()=>onClickIssueCategory("created"));
