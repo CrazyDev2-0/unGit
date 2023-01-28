@@ -6,7 +6,6 @@ let isTrackerTabSelected = false;
 let selectedCategory = "assigned";
 let dataVersion = 0;
 let scheduler = null;
-let trackList = [];
 
 // Check login status
 function checkLoginStatus() {
@@ -49,13 +48,13 @@ function signout()  {
 
 // Ask for details via background call
 function fetchDetailsFromBackend(){
-    if(isTrackerTabSelected)    {
+    if(isTrackerTabSelected){
         chrome.runtime.sendMessage({
-            type: "fetch-tracker"             
-        }), (response)=> {
-            trackList = response;
-            renderTrackList();
-        }
+            type: "fetch-tracker"
+        }, (trackList)=> {
+            console.log(trackList);
+            renderTrackList(trackList);
+        })
         return;
     }
     if(isIssueTabSelected){
@@ -142,26 +141,6 @@ function  onClickUsernameSubmitBtn(){
             $("#username-input").addClass('is-danger');
             $("#github-username-not-found-helper").removeClass("hidden");
         });
-    // chrome.runtime.sendMessage({
-    //     "type" : "set-username",
-    //     "username": user
-    // }, (response) => {
-    //     if(response.isSuccess){
-    //         $("#welcome-screen").addClass("hidden");
-    //         $("#second-screen").removeClass("hidden");
-    //         loggedIn = true;
-    //         $("#cards-list").html(`
-    //             <div style="
-    //                 display: flex;
-    //                 justify-content: center;
-    //                 align-items: center;
-    //                 width: 100%;
-    //                 height: 100%;">
-    //                 <p>Please wait. First time it can take few minutes</p>
-    //             </div>
-    //         `);
-    //     }
-    // });
 }
 
 function onClickIssueBtn(){
@@ -188,13 +167,11 @@ function onClickPRBtn(){
     $("#tracker-category-bar").addClass("hidden");
     $("#pr-category-bar").removeClass("hidden");
     $("#pr-category-under-review").click();
-    
     $("#cards-list").removeClass("hidden");
 }
 
-function renderTrackList(){
-    
-    html = ``;
+function renderTrackList(trackList){
+    let html = "";
     for (let idx = 0; idx < trackList.length; idx++) {
         const ele = trackList[idx];        
         html += `
@@ -206,78 +183,39 @@ function renderTrackList(){
         `   
     }
     $("#track-table").html(html);
-    trackList.map(ele => {$(`#track-${ele.id}`).on("click", ()=> {onClickRemoveTrackerBtn(ele.id)});}) 
-    
+    trackList.map(ele => {$(`#track-${ele.id}`).on("click", ()=> {onClickRemoveTrackerBtn(ele.id)});})
 }
-function onClickTrackerBtn(){
-    console.log("CLICKED");
+function onClickTrackerSubmitBtn(){
     let repoLink = $("#track-link-input").val();
     let repoLabel = $("#track-label-input").val();
     // const urlParsed = repoLink.html_url.match(/(^https:\/\/github.com)?\/(?<org>.*)\/(?<repo>.*)(\/pull.*)/).groups;
     const urlParsed = repoLink.split("/");
     const reqTrack = {
-        "id": parseInt(Math.random()*1000),
-        "organization_name": urlParsed[0],
+        "owner_name": urlParsed[0],
         "repository_name": urlParsed[1],
-        "labels": repoLabel,
+        "labels": repoLabel
     }
-    console.log(reqTrack);
-    trackList.push(reqTrack);
-
-    renderTrackList();
-    
-    // fetch(`https://api.github.com/users/${user}`)
-    //     .then((res)=>  {
-    //         if(res.status !== 200) throw Error("GitHub Repository with mentioned labels not found");
-    //         chrome.runtime.sendMessage({
-    //             "type" : "set-tracker",
-    //             "track": reqTrack
-    //         }, (response) => {
-    //             if(response.isSuccess){
-    //                 let html = $("#track-table").html();
-    //                 html += `
-    //                     <tr>
-    //                         <td>${reqTrack.organization_name}</td>
-    //                         <td>${reqTrack.repository_name}</td>
-    //                         <td id=track-${trackList.length}>X</td>
-    //                     </tr>
-    //                 `
-    //                 $("#track-table").html(html);                    
-    //                 trackList.append(reqTrack);
-    //             }
-    //         });
-    //     }).catch((e)=>   {
-    //         console.log(e);
-    //         $("#username-input").addClass('is-danger');
-    //         $("#github-username-not-found-helper").removeClass("hidden");
-    //     });
     chrome.runtime.sendMessage({
-        type: "set-tracker",
-        data: trackList 
-    }), (response)=> {
-        trackList = response;
-    }
+        type: "add-tracker",
+        payload: reqTrack
+    }, (trackList)=> {
+        renderTrackList(trackList);
+    })
 }
 
 function onClickRemoveTrackerBtn(id){
-    trackList = trackList.filter(function(e){
-        return e.id !== id;
-    })
-    console.log("removed", trackList);
-    renderTrackList();
-    
     chrome.runtime.sendMessage({
-        type: "set-tracker",
-        data: trackList 
-    }), (response)=> {
-        trackList = response;
-    }
+        type: "remove-tracker",
+        id: id
+    }, (trackList)=> {
+        renderTrackList(trackList);
+    })
 }
 
 function onClickIssueCategory(category){
     selectedCategory = category;
     dataVersion = 0;
-    $("#issue-category-assigned").removeClass("is-active");
+    $("#issue-category-assignefetchDetailsFromBackendd").removeClass("is-active");
     $("#issue-category-mentioned").removeClass("is-active");
     $("#issue-category-created").removeClass("is-active");
 
@@ -309,6 +247,7 @@ function onClickTrackerCategory(){
     $("#tracker-category-bar").removeClass("hidden");
     $("#pr-category-bar").addClass("hidden");
     $("#cards-list").addClass("hidden");
+    fetchDetailsFromBackend();
 }
 
 // UI Update from Response | Major Function
@@ -328,7 +267,7 @@ $("#issues-tab").click(onClickIssueBtn);
 $("#prs-tab").click(onClickPRBtn);
 $("#trackers-tab").click(onClickTrackerCategory);
 
-$("#tracker-submit-btn").click(onClickTrackerBtn);
+$("#tracker-submit-btn").click(onClickTrackerSubmitBtn);
 $("#issue-category-assigned").click(()=>onClickIssueCategory("assigned"));
 $("#issue-category-mentioned").click(()=>onClickIssueCategory("mentioned"));
 $("#issue-category-created").click(()=>onClickIssueCategory("created"));

@@ -242,3 +242,7 @@ table {
   .track-close{
     cursor: pointer;
   }
+
+#second-screen{
+    height: auto!important;
+}

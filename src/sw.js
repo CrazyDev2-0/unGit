@@ -1,6 +1,7 @@
 importScripts("./vendor/moment.js");
 importScripts("./issues.js");
 importScripts("./pr.js");
+importScripts("./api.js");
 
 let loggedIn = false;
 let username = '';
@@ -27,6 +28,7 @@ async function setUsername(usernameNew){
         loggedIn = true;
         username = usernameNew;
         scheduleDataFetch();
+        update_profile("", "");
         return true;
     }catch (e) {
         return  false;
@@ -194,6 +196,23 @@ function genCategory(isIssue, category)  {
         else return ""
     }
 }
+
+async function fetchTrackerDetails(){
+    const response = await chrome.storage.local.get(["trackers"]);
+    if(response.trackers === undefined) return [];
+    return JSON.parse(response.trackers);
+}
+
+async function storeTrackerDetails(owner_name, repository_name, labels){
+    let existing_trackers = await fetchTrackerDetails();
+    existing_trackers.push({
+        "id": (Math.random() + 1).toString(36).substring(7),
+        "owner_name": owner_name,
+        "repository_name": repository_name,
+        "labels": labels
+    })
+    await chrome.storage.local.set({"trackers": JSON.stringify(existing_trackers)})
+}
 // Message listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if(message.type === "get-login-status"){
@@ -210,13 +229,40 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     "isSuccess" : isSuccess
                 })
             })
+    }
+    else if(message.type === "add-tracker"){
+        subscribe(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
+            .then((response)=>{
+                console.log(response)
+                if(response.success){
+                    storeTrackerDetails(message.owner_name, message.repository_name)
+                        .then(()=>{
+                            fetchTrackerDetails()
+                                .then((data)=>{
+                                    sendResponse(data)
+                                })
+                        })
+                }
+            })
+    }else if(message.type === "del-tracker"){
+        unsubscribe(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
+            .then((response)=>{
+                console.log(response)
+                if(response.success){
+                    storeTrackerDetails(message.owner_name, message.repository_name)
+                        .then(()=>{
+                            fetchTrackerDetails()
+                                .then((data)=>{
+                                    sendResponse(data)
+                                })
+                        })
+                }
+            })
     }else if(message.type === "fetch-tracker"){
         // getTracker(message.username)
         chrome.storage.local.get(["tracker"])
             .then((data)=>{
-                sendResponse({
-                    "payload": data.tracker 
-                })
+                sendResponse(data.tracker || [])
             })
     }else if(message.type === "set-tracker"){
         // getTracker(message.username)
