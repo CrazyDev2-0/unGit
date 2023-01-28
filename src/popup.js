@@ -49,7 +49,15 @@ function signout()  {
 
 // Ask for details via background call
 function fetchDetailsFromBackend(){
-    if(isTrackerTabSelected)    return;
+    if(isTrackerTabSelected)    {
+        chrome.runtime.sendMessage({
+            type: "fetch-tracker"             
+        }), (response)=> {
+            trackList = response;
+            renderTrackList();
+        }
+        return;
+    }
     if(isIssueTabSelected){
         chrome.runtime.sendMessage({
             type: "fetch-issues",
@@ -185,6 +193,7 @@ function onClickPRBtn(){
 }
 
 function renderTrackList(){
+    
     html = ``;
     for (let idx = 0; idx < trackList.length; idx++) {
         const ele = trackList[idx];        
@@ -242,7 +251,12 @@ function onClickTrackerBtn(){
     //         $("#username-input").addClass('is-danger');
     //         $("#github-username-not-found-helper").removeClass("hidden");
     //     });
-    
+    chrome.runtime.sendMessage({
+        type: "set-tracker",
+        data: trackList 
+    }), (response)=> {
+        trackList = response;
+    }
 }
 
 function onClickRemoveTrackerBtn(id){
@@ -251,6 +265,13 @@ function onClickRemoveTrackerBtn(id){
     })
     console.log("removed", trackList);
     renderTrackList();
+    
+    chrome.runtime.sendMessage({
+        type: "set-tracker",
+        data: trackList 
+    }), (response)=> {
+        trackList = response;
+    }
 }
 
 function onClickIssueCategory(category){

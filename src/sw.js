@@ -210,11 +210,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     "isSuccess" : isSuccess
                 })
             })
-    }else if(message.type === "set-tracker"){
-        setTracker(message.username)
-            .then((isSuccess)=>{
+    }else if(message.type === "fetch-tracker"){
+        // getTracker(message.username)
+        chrome.storage.local.get(["tracker"])
+            .then((data)=>{
                 sendResponse({
-                    "isSuccess" : isSuccess
+                    "payload": data.tracker 
+                })
+            })
+    }else if(message.type === "set-tracker"){
+        // getTracker(message.username)
+        chrome.storage.local.set({"tracker": message.data})
+            .then(()=>{
+                sendResponse({
+                    "isSuccess" : true
                 })
             })
     }else if(message.type === "signout"){
