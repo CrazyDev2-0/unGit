@@ -52,7 +52,8 @@ async function unsubscribe(owner_name, repo_name) {
     };
 
     const response = await fetch("https://hacknitr.tanmoy.codes/unsubscribe", requestOptions);
-    const res await response.json();
+    const result = await response.json();
+    return result;
 }
 
 async function subscribe(owner_name, repo_name) {
