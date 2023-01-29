@@ -215,7 +215,7 @@ function onClickRemoveTrackerBtn(id){
 function onClickIssueCategory(category){
     selectedCategory = category;
     dataVersion = 0;
-    $("#issue-category-assignefetchDetailsFromBackendd").removeClass("is-active");
+    $("#issue-category-assigned").removeClass("is-active");
     $("#issue-category-mentioned").removeClass("is-active");
     $("#issue-category-created").removeClass("is-active");
 
