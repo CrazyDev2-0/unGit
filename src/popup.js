@@ -176,7 +176,7 @@ function renderTrackList(trackList){
         const ele = trackList[idx];        
         html += `
             <tr>
-                <td>${ele.repository_name}</td>
+                <td>${ele.owner_name}/${ele.repository_name}</td>
                 <td>${ele.labels}</td>
                 <td class="track-close" id="track-${ele.id}">X</td>
             </tr>

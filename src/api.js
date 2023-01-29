@@ -56,24 +56,24 @@ async function unsubscribe(owner_name, repo_name) {
     return result;
 }
 
-async function subscribe(owner_name, repo_name) {
-    const user = (await chrome.storage.local.get(['username'])).username;
+async function subscribe(owner_name, repo_name, labels){
     var myHeaders = new Headers();
-    myHeaders.append("username", user);
     myHeaders.append("Content-Type", "application/json");
+    const username = (await chrome.storage.local.get(['username'])).username;
+    myHeaders.append("username", username);
 
     var raw = JSON.stringify({
         "owner_name": owner_name,
-        "repository_name": repo_name
-    });
+        "repository_name": repo_name,
+        "labels": labels
+    })
 
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: raw
-    };
+    }
 
-    const response = await fetch("https://hacknitr.tanmoy.codes/subscribe", requestOptions);
-    const result = await response.json();
-    return result;
+    const response = await fetch("https://hacknitr.tanmoy.codes/rollbacksubscription", requestOptions);
+    return await response.json();
 }
