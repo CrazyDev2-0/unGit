@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "7a5f065f-e064-4a42-b8da-d1d6d527e835",
+		"name": "Ungit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23267355"
+	},
+	"item": [
+		{
+			"name": "Profile update / register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"tanmoy676\",\n    \"mobile_no\": \"s\",\n    \"email_id\": \"ts741127@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "tanmoy676",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"owner_name\": \"a\",\n    \"repository_name\": \"def\",\n    \"labels\": \"hello3hello2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hacknitr.tanmoy.codes/rollbacksubscription",
+					"protocol": "https",
+					"host": [
+						"hacknitr",
+						"tanmoy",
+						"codes"
+					],
+					"path": [
+						"rollbacksubscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsubsribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "tanmoy676",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"owner_name\": \"abc\",\n    \"repository_name\": \"def\",\n    \"labels\": \"hello3|hello2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hacknitr.tanmoy.codes/unsubscribe",
+					"protocol": "https",
+					"host": [
+						"hacknitr",
+						"tanmoy",
+						"codes"
+					],
+					"path": [
+						"unsubscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notification",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"value": "Tanmoy741127",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"owner_name\": \"abc\",\n    \"repository_name\": \"def\",\n    \"labels\": \"hello3|hello2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hacknitr.tanmoy.codes/notifications",
+					"protocol": "https",
+					"host": [
+						"hacknitr",
+						"tanmoy",
+						"codes"
+					],
+					"path": [
+						"notifications"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
