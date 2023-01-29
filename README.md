@@ -28,6 +28,12 @@ https://user-images.githubusercontent.com/80196675/215314697-344156f9-7212-42aa-
 ### Additional Backend:
 - <a href="https://github.com/CrazyDev2-0/backend-ungit">Follow this link: </a> https://github.com/CrazyDev2-0/backend-ungit
 
+### Deployed backend:
+- https://hacknitr.tanmoy.codes/
+
+### Postman collection to explore API:
+- ![Postman JSON v2 File](./Ungit.postman_collection.json)
+
 ### Contributors:
 
 - **Team CrazyDev**:
