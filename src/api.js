@@ -76,3 +76,20 @@ async function subscribe(owner_name, repo_name, labels){
     const response = await fetch("https://hacknitr.tanmoy.codes/rollbacksubscription", requestOptions);
     return await response.json();
 }
+
+async function getNotif() {
+    const user = (await chrome.storage.local.get(['username'])).username;
+    var myHeaders = new Headers();
+    myHeaders.append("username", user);
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders
+    };
+
+    // {title, url, timestamp}
+    const response = await fetch("https://hacknitr.tanmoy.codes/notifications", requestOptions);
+    const result = await response.json();
+    return result;
+}

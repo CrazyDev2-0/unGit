@@ -6,6 +6,7 @@ importScripts("./api.js");
 let loggedIn = false;
 let username = '';
 let scheduler = null;
+let notifScheduler = null;
 
 // Read username from storage
 async function readUsernameFromStorage() {
@@ -16,6 +17,7 @@ async function readUsernameFromStorage() {
     }
     username = res.username;
     scheduleDataFetch();
+    scheduleNotifFetch();
     loggedIn = true;
 }
 
@@ -60,6 +62,15 @@ function scheduleDataFetch(){
     scheduler = setInterval(async function () {
         await updateLocalDatabase();
     }, 5*60*1000);
+}
+
+function scheduleNotifFetch(){
+    if(notifScheduler != null) clearInterval(notifScheduler);
+    // updateLocalDatabase();
+    notifScheduler = setInterval(async function () {
+        const result = await getNotif();
+        result.map(ele=> {showNotification(ele.title, ele.url, "info")})
+    }, 10*1000);
 }
 
 
@@ -167,11 +178,13 @@ function IDMap(arg) {
 }
 
 // Invoke notification
-async function showNotification(title, message, type) {
+async function showNotification(message, url, type) {
     let res = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
     if(res.length === 0) return;
-    await chrome.tabs.sendMessage(res[0].id, {title: title, message: message, type: type})
+    await chrome.tabs.sendMessage(res[0].id, {message: message, url: url, type: type})
 }
+
+
 
 function changed(oldState, newState) {
     const oldIDMap = IDMap(oldState)
@@ -235,7 +248,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             .then((response)=>{
                 console.log(response)
                 if(response.success){
-                    storeTrackerDetails(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
+                    storeTrackerDetails(message.owner_name, message.repository_name)
                         .then(()=>{
                             fetchTrackerDetails()
                                 .then((data)=>{
@@ -244,49 +257,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                         })
                 }
             })
-    }else if(message.type === "remove-tracker"){
-        const id = message.id;
-        // find the tracker
-        fetchTrackerDetails()
-            .then((data)=>{
-                const tracker = data.find((tracker)=>{
-                    return tracker.id === id
-                })
-                if(tracker === undefined) return;
-                unsubscribe(tracker.owner_name, tracker.repository_name, tracker.labels)
-                    .then((response)=>{
-                        if(response.success){
-                            // remove from storage
-                            const newTrackers = data.filter((tracker)=>{
-                                return tracker.id !== id
-                            })
-                            chrome.storage.local.set({"trackers": JSON.stringify(newTrackers)})
-                                .then(()=>{
-                                    fetchTrackerDetails()
-                                        .then((data)=>{
-                                            sendResponse(data)
-                                        })
+    }else if(message.type === "del-tracker"){
+        unsubscribe(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
+            .then((response)=>{
+                console.log(response)
+                if(response.success){
+                    storeTrackerDetails(message.owner_name, message.repository_name)
+                        .then(()=>{
+                            fetchTrackerDetails()
+                                .then((data)=>{
+                                    sendResponse(data)
                                 })
-                        }
-                    })
+                        })
+                }
             })
-        // unsubscribe(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
-        //     .then((response)=>{
-        //         console.log(response)
-        //         if(response.success){
-        //             storeTrackerDetails(message.owner_name, message.repository_name)
-        //                 .then(()=>{
-        //                     fetchTrackerDetails()
-        //                         .then((data)=>{
-        //                             sendResponse(data)
-        //                         })
-        //                 })
-        //         }
-        //     })
     }else if(message.type === "fetch-tracker"){
-        fetchTrackerDetails()
+        // getTracker(message.username)
+        chrome.storage.local.get(["tracker"])
             .then((data)=>{
-                sendResponse(data)
+                sendResponse(data.tracker || [])
             })
     }else if(message.type === "set-tracker"){
         // getTracker(message.username)
