@@ -248,7 +248,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             .then((response)=>{
                 console.log(response)
                 if(response.success){
-                    storeTrackerDetails(message.owner_name, message.repository_name)
+                    storeTrackerDetails(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
                         .then(()=>{
                             fetchTrackerDetails()
                                 .then((data)=>{
@@ -287,7 +287,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // getTracker(message.username)
         chrome.storage.local.get(["trackers"])
             .then((data)=>{
-                sendResponse(JSON.parse(data.trackers) || [])
+                let trackers_up = data.trackers;
+                if(trackers_up === undefined) return [];
+                sendResponse(JSON.parse(data.trackers));
             })
     }else if(message.type === "set-tracker"){
         // getTracker(message.username)

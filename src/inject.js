@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     })
     child.innerHTML = `
             <div class="content">
-            <span class="alert-text">${message} <a>${url}</a></span>
+            <span class="alert-text">${message} <a href="${url}">Check it</a></span>
         </div>
         <button class="close">
             <svg height="18px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1"
