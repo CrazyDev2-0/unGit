@@ -32,7 +32,7 @@ https://user-images.githubusercontent.com/80196675/215314697-344156f9-7212-42aa-
 - https://hacknitr.tanmoy.codes/
 
 ### Postman collection to explore API:
-- ![Postman JSON v2 File](./Ungit.postman_collection.json)
+- [Postman JSON v2 File](./Ungit.postman_collection.json)
 
 ### Contributors:
 
