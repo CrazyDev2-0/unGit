@@ -257,29 +257,41 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                         })
                 }
             })
-    }else if(message.type === "del-tracker"){
-        unsubscribe(message.payload.owner_name, message.payload.repository_name, message.payload.labels)
-            .then((response)=>{
-                console.log(response)
-                if(response.success){
-                    storeTrackerDetails(message.owner_name, message.repository_name)
-                        .then(()=>{
-                            fetchTrackerDetails()
-                                .then((data)=>{
-                                    sendResponse(data)
+    }else if(message.type === "remove-tracker"){
+        const id = message.id;
+        // find the tracker
+        fetchTrackerDetails()
+            .then((data)=> {
+                const tracker = data.find((tracker) => {
+                    return tracker.id === id
+                })
+                if (tracker === undefined) return;
+                unsubscribe(tracker.owner_name, tracker.repository_name, tracker.labels)
+                    .then((response) => {
+                        if (response.success) {
+                            // remove from storage
+                            const newTrackers = data.filter((tracker) => {
+                                return tracker.id !== id
+                            })
+                            chrome.storage.local.set({"trackers": JSON.stringify(newTrackers)})
+                                .then(() => {
+                                    fetchTrackerDetails()
+                                        .then((data) => {
+                                            sendResponse(data)
+                                        })
                                 })
-                        })
-                }
+                        }
+                    })
             })
     }else if(message.type === "fetch-tracker"){
         // getTracker(message.username)
-        chrome.storage.local.get(["tracker"])
+        chrome.storage.local.get(["trackers"])
             .then((data)=>{
-                sendResponse(data.tracker || [])
+                sendResponse(JSON.parse(data.trackers) || [])
             })
     }else if(message.type === "set-tracker"){
         // getTracker(message.username)
-        chrome.storage.local.set({"tracker": message.data})
+        chrome.storage.local.set({"trackers": message.data})
             .then(()=>{
                 sendResponse({
                     "isSuccess" : true
